@@ -43,11 +43,15 @@ class App extends Component {
       .delete(`${ this.state.baseUrl }/api/posts?id=${ id }`)
       .then((results) => {
         this.setState({ posts: results.data })
-      })
+      });
   }
 
-  createPost() {
-
+  createPost(text) {
+    axios
+      .post(`${ this.state.baseUrl }/api/posts`, { text })
+      .then((results) => {
+        this.setState({ posts: results.data })
+      });
   }
 
   render() {
@@ -59,7 +63,7 @@ class App extends Component {
 
         <section className="App__content">
 
-          <Compose />
+          <Compose createPostFn={ this.createPost } />
           {
             posts.map( post => (
               <Post 
